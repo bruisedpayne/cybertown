@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: cybertown-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: cybertown
+      POSTGRES_USER: cybertown
+      POSTGRES_PASSWORD: cybertown123
+    ports:
+      - "5432:5432"
+    volumes:
+      - cybertown_db_data:/var/lib/postgresql/data
+
+volumes:
+  cybertown_db_data:
