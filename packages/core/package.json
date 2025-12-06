@@ -4,19 +4,19 @@
   "type": "module",
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
-    "dk": "NODE_OPTIONS='--import tsx' drizzle-kit",
-    "db:push": "pnpm dk push"
+    "db:push": "pnpm build && drizzle-kit push"
   },
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
   "devDependencies": {
     "@types/pg": "^8.15.6",
     "drizzle-kit": "^0.31.7",
-    "tsx": "^4.20.6",
-    "typescript": "^5.9.3"
+    "typescript": "catalog:"
   },
   "dependencies": {
+    "better-auth": "*",
     "drizzle-orm": "^0.44.7",
-    "pg": "^8.16.3"
+    "pg": "^8.16.3",
+    "ulid": "^3.0.2"
   }
 }
