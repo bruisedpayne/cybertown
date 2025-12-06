@@ -15,5 +15,8 @@
             "id": "7c3fb83cbcb74153b36da8dba86dc58a",
             "localConnectionString": "postgres://cybertown:cybertown123@localhost:5432/cybertown?sslmode=disable"
         }
-    ]
+    ],
+    "vars": {
+        "GOOGLE_CLIENT_ID": "375742812488-5abkfv6l3fsca6vdhv58dufh35j6t9p0.apps.googleusercontent.com"
+    }
 }

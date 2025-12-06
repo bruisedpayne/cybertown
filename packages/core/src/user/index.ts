@@ -1,20 +1,9 @@
 import { eq } from 'drizzle-orm'
-import { getDB } from '../db/index.js'
 import { usersTable } from '../db/schema/index.js'
-
-export function createUser(id: string, name: string, email: string) {
-  return getDB()
-    .insert(usersTable)
-    .values({
-      id,
-      name,
-      email,
-    })
-    .returning({ id: usersTable.id })
-}
+import { useDB } from '../context.js'
 
 export async function isUsernameAvailable(name: string) {
-  const res = await getDB()
+  const res = await useDB()
     .select()
     .from(usersTable)
     .where(eq(usersTable.name, name))

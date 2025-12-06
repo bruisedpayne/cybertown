@@ -1,12 +1,12 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { auth } from '@cybertown/core/auth'
 import { json } from '@tanstack/react-start'
+import { useAuth } from '@cybertown/core/context'
 
 export const Route = createFileRoute('/api/me')({
   server: {
     handlers: {
       GET: async ({ request }: { request: Request }) => {
-        const session = await auth.api.getSession({
+        const session = await useAuth().api.getSession({
           headers: request.headers,
         })
 
