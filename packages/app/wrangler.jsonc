@@ -1,0 +1,19 @@
+{
+    "$schema": "./node_modules/wrangler/config-schema.json",
+    "name": "cybertown",
+    "compatibility_date": "2025-09-02",
+    "compatibility_flags": [
+        "nodejs_compat"
+    ],
+    "main": "./src/server.ts",
+    "observability": {
+        "enabled": true
+    },
+    "hyperdrive": [
+        {
+            "binding": "HYPERDRIVE",
+            "id": "7c3fb83cbcb74153b36da8dba86dc58a",
+            "localConnectionString": "postgres://cybertown:cybertown123@localhost:5432/cybertown?sslmode=disable"
+        }
+    ]
+}

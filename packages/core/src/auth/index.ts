@@ -1,11 +1,11 @@
 import { betterAuth } from 'better-auth'
 import { drizzleAdapter } from 'better-auth/adapters/drizzle'
-import { db } from '../db/index.js'
+import { getDB } from '../db/index.js'
 import { ulid } from 'ulid'
 import * as schema from '../db/schema/index.js'
 
 export const auth = betterAuth({
-  database: drizzleAdapter(db, {
+  database: drizzleAdapter(getDB(), {
     provider: 'pg',
     schema,
   }),

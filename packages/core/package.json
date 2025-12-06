@@ -6,9 +6,18 @@
     "build": "tsc -p tsconfig.build.json",
     "db:push": "pnpm build && drizzle-kit push"
   },
-  "types": "dist/index.d.ts",
-  "main": "dist/index.js",
+  "exports": {
+    "./db": {
+      "types": "./dist/db/index.d.ts",
+      "import": "./dist/db/index.js"
+    },
+    "./auth": {
+      "types": "./dist/auth/index.d.ts",
+      "import": "./dist/auth/index.js"
+    }
+  },
   "devDependencies": {
+    "@cloudflare/workers-types": "^4.20251205.0",
     "@types/pg": "^8.15.6",
     "drizzle-kit": "^0.31.7",
     "typescript": "catalog:"
