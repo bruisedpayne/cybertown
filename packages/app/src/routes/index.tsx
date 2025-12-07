@@ -1,20 +1,37 @@
+import { Header } from '@/components/Header'
+import { useAuth } from '@cybertown/core/context'
 import { createFileRoute } from '@tanstack/react-router'
-import { authClient } from '@/lib/utils'
+import { createServerFn } from '@tanstack/react-start'
+import { getRequest } from '@tanstack/react-start/server'
 
-export const Route = createFileRoute('/')({ component: App })
+const getUser = createServerFn().handler(async () => {
+  const session = await useAuth().api.getSession({
+    headers: getRequest().headers,
+  })
+
+  if (!session) {
+    return null
+  }
+
+  return {
+    id: session.user.id,
+    name: session.user.name,
+    image: session.user.image,
+  }
+})
+
+export const Route = createFileRoute('/')({
+  loader: () => getUser(),
+  component: App,
+})
 
 function App() {
+  const user = Route.useLoaderData()
+  console.log(user)
+
   return (
-    <div>
-      <button
-        onClick={() => {
-          authClient.signIn.social({
-            provider: 'google',
-          })
-        }}
-      >
-        Login
-      </button>
-    </div>
+    <main className="max-w-5xl mx-auto p-4">
+      <Header />
+    </main>
   )
 }
