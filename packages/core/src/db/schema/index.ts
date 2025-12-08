@@ -9,4 +9,4 @@ export {
   accountRelations,
 } from './auth.js'
 
-export { roomRoleEnum, roomsTable } from './room.js'
+export { roomRoleEnum, roomsTable, roomRolesTable } from './room.js'

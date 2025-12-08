@@ -10,7 +10,7 @@ export default {
     const db = createDB(env.HYPERDRIVE)
     const auth = createAuth(db)
 
-    return createContext({ db, auth }, () => {
+    return createContext({ db, auth, request: {} }, () => {
       return handler.fetch(request)
     })
   },

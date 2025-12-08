@@ -1,3 +1,4 @@
+import { CreateRoom } from '@/components/CreateRoom'
 import { Header } from '@/components/Header'
 import { useAuth } from '@cybertown/core/context'
 import { createFileRoute } from '@tanstack/react-router'
@@ -26,12 +27,12 @@ export const Route = createFileRoute('/')({
 })
 
 function App() {
-  const user = Route.useLoaderData()
-  console.log(user)
-
   return (
     <main className="max-w-5xl mx-auto p-4">
-      <Header />
+      <div className="mb-6">
+        <Header />
+      </div>
+      <CreateRoom />
     </main>
   )
 }

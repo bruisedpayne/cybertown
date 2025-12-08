@@ -6,7 +6,6 @@ import {
   integer,
   pgEnum,
   primaryKey,
-  boolean,
 } from 'drizzle-orm/pg-core'
 import { timestamps } from '../timestamps.js'
 import { usersTable } from './user.js'
@@ -14,8 +13,8 @@ import { usersTable } from './user.js'
 export const roomRoleEnum = pgEnum('room_role', ['co_host', 'guest'])
 
 export const roomsTable = pgTable('rooms', {
-  id: serial('id').primaryKey(),
-  topic: varchar('name', { length: 256 }),
+  id: text('id').primaryKey(),
+  topic: varchar('topic', { length: 256 }),
   languages: text('languages').array().notNull(),
   size: integer('size').notNull(),
   welcomeMessage: varchar('welcome_message', { length: 512 }),
@@ -31,7 +30,7 @@ export const roomsTable = pgTable('rooms', {
 export const roomRolesTable = pgTable(
   'room_roles',
   {
-    roomId: integer('room_id')
+    roomId: text('room_id')
       .references(() => roomsTable.id, { onDelete: 'cascade' })
       .notNull(),
     userId: text('user_id')
