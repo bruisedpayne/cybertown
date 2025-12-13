@@ -18,6 +18,7 @@ import {
   AlertDialogCancel,
   AlertDialogAction,
 } from '@/components/ui/alert-dialog'
+import { User as UserIcon, LogOut as LogOutIcon } from 'lucide-react'
 
 type AuthUser = {
   id: string
@@ -56,12 +57,16 @@ export function UserMenu(props: Props) {
           <p>{user.name}</p>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuItem className="py-1">Edit Profile</DropdownMenuItem>
+          <DropdownMenuItem className="py-1.5">
+            <UserIcon />
+            <span>Edit Profile</span>
+          </DropdownMenuItem>
           <DropdownMenuItem
-            className="py-1"
+            className="py-1.5"
             onClick={() => setConfirmOpen(true)}
           >
-            Log out
+            <LogOutIcon />
+            <span>Log out</span>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

@@ -70,7 +70,7 @@ export function CreateRoom() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline">Create Room</Button>
+        <Button>Create Room</Button>
       </DialogTrigger>
 
       <DialogContent className="sm:max-w-[425px]">

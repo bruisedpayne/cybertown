@@ -1,22 +1,34 @@
 {
-    "$schema": "./node_modules/wrangler/config-schema.json",
-    "name": "cybertown",
-    "compatibility_date": "2025-09-02",
-    "compatibility_flags": [
-        "nodejs_compat"
-    ],
-    "main": "./src/server.ts",
-    "observability": {
-        "enabled": true
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "cybertown",
+  "compatibility_date": "2025-09-02",
+  "compatibility_flags": ["nodejs_compat"],
+  "main": "./src/server.ts",
+  "observability": {
+    "enabled": true,
+  },
+  "hyperdrive": [
+    {
+      "binding": "HYPERDRIVE",
+      "id": "7c3fb83cbcb74153b36da8dba86dc58a",
+      "localConnectionString": "postgres://cybertown:cybertown123@localhost:5432/cybertown?sslmode=disable",
     },
-    "hyperdrive": [
-        {
-            "binding": "HYPERDRIVE",
-            "id": "7c3fb83cbcb74153b36da8dba86dc58a",
-            "localConnectionString": "postgres://cybertown:cybertown123@localhost:5432/cybertown?sslmode=disable"
-        }
+  ],
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "ROOM_DO",
+        "class_name": "RoomDO",
+      },
     ],
-    "vars": {
-        "GOOGLE_CLIENT_ID": "375742812488-5abkfv6l3fsca6vdhv58dufh35j6t9p0.apps.googleusercontent.com"
-    }
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["RoomDO"],
+    },
+  ],
+  "vars": {
+    "GOOGLE_CLIENT_ID": "375742812488-5abkfv6l3fsca6vdhv58dufh35j6t9p0.apps.googleusercontent.com",
+  },
 }

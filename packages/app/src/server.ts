@@ -4,6 +4,7 @@ import { createDB } from '@cybertown/core/db'
 import { env } from 'cloudflare:workers'
 import { createAuth } from '@cybertown/core/auth'
 import { createContext } from '@cybertown/core/context'
+export { RoomDO } from '@/lib/durable-objects/RoomDO'
 
 export default {
   async fetch(request: Request) {
