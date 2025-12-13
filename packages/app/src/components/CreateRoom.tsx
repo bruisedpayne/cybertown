@@ -25,11 +25,31 @@ import {
 import { createRoomFn } from '@/lib/actions/room'
 import { useForm } from '@tanstack/react-form'
 import { FormFieldError } from './FormFieldError'
+import { Spinner } from '@/components/ui/spinner'
 import { toast } from 'sonner'
 import { useState } from 'react'
+import { useMutation } from '@tanstack/react-query'
 
 export function CreateRoom() {
   const [open, setOpen] = useState(false)
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: async (data: CreateRoomInput) => {
+      return await createRoomFn({ data })
+    },
+    onSuccess: () => {
+      setOpen(false)
+      toast.success('Room created successfully!')
+      form.reset()
+    },
+    onError: (err) => {
+      let errMsg = 'Failed to create room. Try Again'
+      if (err instanceof Error) {
+        errMsg = err.message
+      }
+      toast.error(errMsg)
+    },
+  })
 
   const form = useForm({
     defaultValues: {
@@ -41,16 +61,7 @@ export function CreateRoom() {
       onChange: createRoomInputSchema,
     },
     onSubmit: async ({ value }) => {
-      try {
-        await createRoomFn({ data: value })
-        setOpen(false)
-      } catch (err) {
-        let errMsg = 'Failed to create room. Try Again'
-        if (err instanceof Error) {
-          errMsg = err.message
-        }
-        toast.error(errMsg)
-      }
+      mutate(value)
     },
   })
 
@@ -141,9 +152,16 @@ export function CreateRoom() {
 
           <DialogFooter>
             <DialogClose asChild>
-              <Button variant="outline">Cancel</Button>
+              <Button variant="outline" disabled={isPending}>
+                Cancel
+              </Button>
             </DialogClose>
-            <Button type="submit" className="flex items-center gap-2">
+            <Button
+              type="submit"
+              disabled={isPending}
+              className="flex items-center gap-2"
+            >
+              {isPending && <Spinner />}
               <span>Submit</span>
             </Button>
           </DialogFooter>

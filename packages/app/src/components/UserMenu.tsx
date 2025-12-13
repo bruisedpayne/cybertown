@@ -5,6 +5,8 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { authClient } from '@/lib/utils'
+import { useQueryClient } from '@tanstack/react-query'
+import { useRouter } from '@tanstack/react-router'
 
 type AuthUser = {
   id: string
@@ -17,6 +19,8 @@ type Props = {
 }
 
 export function UserMenu(props: Props) {
+  const queryClient = useQueryClient()
+  const router = useRouter()
   const { user } = props
 
   return (
@@ -33,7 +37,14 @@ export function UserMenu(props: Props) {
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuItem className="py-1">Edit Profile</DropdownMenuItem>
-        <DropdownMenuItem className="py-1" onClick={() => authClient.signOut()}>
+        <DropdownMenuItem
+          className="py-1"
+          onClick={async () => {
+            await authClient.signOut()
+            queryClient.removeQueries({ queryKey: ['user'] })
+            router.invalidate()
+          }}
+        >
           Log out
         </DropdownMenuItem>
       </DropdownMenuContent>
