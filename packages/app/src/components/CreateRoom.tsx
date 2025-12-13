@@ -27,29 +27,11 @@ import { useForm } from '@tanstack/react-form'
 import { FormFieldError } from './FormFieldError'
 import { Spinner } from '@/components/ui/spinner'
 import { toast } from 'sonner'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useMutation } from '@tanstack/react-query'
 
 export function CreateRoom() {
   const [open, setOpen] = useState(false)
-
-  const { mutate, isPending } = useMutation({
-    mutationFn: async (data: CreateRoomInput) => {
-      return await createRoomFn({ data })
-    },
-    onSuccess: () => {
-      setOpen(false)
-      toast.success('Room created successfully!')
-      form.reset()
-    },
-    onError: (err) => {
-      let errMsg = 'Failed to create room. Try Again'
-      if (err instanceof Error) {
-        errMsg = err.message
-      }
-      toast.error(errMsg)
-    },
-  })
 
   const form = useForm({
     defaultValues: {
@@ -60,10 +42,30 @@ export function CreateRoom() {
     validators: {
       onChange: createRoomInputSchema,
     },
-    onSubmit: async ({ value }) => {
-      mutate(value)
+    onSubmit: async ({ value }) => createRoomMutation(value),
+  })
+
+  const { mutate: createRoomMutation, isPending } = useMutation({
+    mutationFn: async (data: CreateRoomInput) => {
+      return await createRoomFn({ data })
+    },
+    onSuccess: () => {
+      setOpen(false)
+    },
+    onError: (err) => {
+      let errMsg = 'Failed to create room. Try Again'
+      if (err instanceof Error) {
+        errMsg = err.message
+      }
+      toast.error(errMsg)
     },
   })
+
+  useEffect(() => {
+    if (!open) {
+      form.reset()
+    }
+  }, [open, form])
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
